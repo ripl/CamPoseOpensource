@@ -1,0 +1,46 @@
+[project]
+dependencies = [
+    "pip",
+    "setuptools",
+    "wheel",
+    "torch",
+    "torchvision",
+    "numpy",
+    "scipy",
+    "h5py",
+    "einops",
+    "pillow",
+    "tqdm",
+    "imageio",
+    "imageio-ffmpeg",
+    "PyOpenGL",
+    "glfw",
+    "wandb",
+    "pyyaml",
+    "diffusers",
+    "transformers",
+    "mujoco",
+    # "mani_skill",
+    "robosuite",
+]
+name = "know-your-camera"
+version = "0.1.0"
+description = "Do You Know Where Your Camera Is? View-Invariant Policy Learning with Camera Conditioning"
+readme = "README.md"
+requires-python = ">=3.10"
+
+# -----------------------------
+# uv
+# -----------------------------
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
+torchaudio = { index = "pytorch-cu128" }
+mani_skill = { path = "maniskill_source", editable = true }
+robosuite = { path = "robosuite_source", editable = true }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
