@@ -65,6 +65,7 @@ torchvision = { version = "*", index = "https://download.pytorch.org/whl/cu128" 
 torchaudio = { version = "*", index = "https://download.pytorch.org/whl/cu128" }
 
 [tool.pixi.environments]
+default = { features = ["maniskill", "robosuite"] }
 maniskill = { features = ["maniskill"] }
 robosuite = { features = ["robosuite"] }
 
