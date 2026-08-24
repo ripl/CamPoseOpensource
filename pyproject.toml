@@ -1,10 +1,9 @@
 [project]
 dependencies = [
-    "pip",
-    "setuptools",
-    "wheel",
     "torch",
     "torchvision",
+    "torchaudio",
+
     "numpy",
     "scipy",
     "h5py",
@@ -19,15 +18,18 @@ dependencies = [
     "pyyaml",
     "diffusers",
     "transformers",
-    "mujoco",
-    # "mani_skill",
-    "robosuite",
+    "mujoco==3.3.0",
+    "gdown==5.2.2",
 ]
 name = "know-your-camera"
 version = "0.1.0"
 description = "Do You Know Where Your Camera Is? View-Invariant Policy Learning with Camera Conditioning"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<3.11"
+
+[project.optional-dependencies]
+maniskill = ["mani_skill"]
+robosuite = ["robosuite"]
 
 # -----------------------------
 # uv
@@ -37,6 +39,7 @@ requires-python = ">=3.10"
 torch = { index = "pytorch-cu128" }
 torchvision = { index = "pytorch-cu128" }
 torchaudio = { index = "pytorch-cu128" }
+
 mani_skill = { path = "maniskill_source", editable = true }
 robosuite = { path = "robosuite_source", editable = true }
 
@@ -44,3 +47,39 @@ robosuite = { path = "robosuite_source", editable = true }
 name = "pytorch-cu128"
 url = "https://download.pytorch.org/whl/cu128"
 explicit = true
+
+# -----------------------------
+# pixi
+# -----------------------------
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.dependencies]
+python = "3.10.*"
+
+[tool.pixi.pypi-dependencies]
+torch = { version = "*", index = "https://download.pytorch.org/whl/cu128" }
+torchvision = { version = "*", index = "https://download.pytorch.org/whl/cu128" }
+torchaudio = { version = "*", index = "https://download.pytorch.org/whl/cu128" }
+
+[tool.pixi.environments]
+maniskill = { features = ["maniskill"] }
+robosuite = { features = ["robosuite"] }
+
+[tool.pixi.feature.maniskill.pypi-dependencies]
+mani_skill = { path = "maniskill_source", editable = true }
+
+[tool.pixi.feature.robosuite.pypi-dependencies]
+robosuite = { path = "robosuite_source", editable = true }
+
+[tool.pixi.tasks]
+init-submodules = "git submodule update --init --recursive"
+download-demos = "bash scripts/download_demos.sh"
+setup = { depends-on = ["init-submodules", "download-demos"] }
+
+[tool.pixi.tasks.fig6]
+default-environment = "robosuite"
+cmd = "python reproduce/reproduce.py --paper_item fig6 --exp lift_randomized_with_conditioning --seed 0"
+description = "Reproduce figure 6"

@@ -3,3 +3,6 @@ hf_weights/
 **/checkpoints/
 **/__pycache__/
 **/demos/
+# pixi environments
+.pixi/*
+!.pixi/config.toml
