@@ -31,23 +31,24 @@
 ## Installation
 
 First, clone the repo and cd into it.
-```
+```sh
 git clone https://github.com/ripl/CamPoseOpensource
 cd CamPoseOpensource
 ```
 
-Then, run the setup script. It will setup the conda environment and download data.
+Then, setup the Pixi environment and download data.
 
-```
-bash setup.sh
-```
-
-Activate the conda environment with 
-```
-conda activate know_your_camera
+```sh
+pixi run setup
 ```
 
-If you only need ManiSkill or robosuite, comment out the lines to install other one.
+Activate the Pixi environment with
+
+```sh
+pixi shell -e robosuite # Only Robosuite
+pixi shell -e maniskill # Only ManiSkill
+pixi shell # All environments
+```
 
 ---
 
@@ -101,7 +102,7 @@ def get_plucker_raymap(K, c2w, height, width):
     )
     o = c2w[:3, 3].view(1, 1, 3)
     m = torch.cross(o, d_world, dim=-1)
-    return torch.cat([d_world, m], dim=-1)                         
+    return torch.cat([d_world, m], dim=-1)
 ```
 
 
