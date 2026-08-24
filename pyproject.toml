@@ -18,7 +18,7 @@ dependencies = [
     "pyyaml",
     "diffusers",
     "transformers",
-    "mujoco==3.3.7",
+    "mujoco>=3.3.0,<3.4",
     "gdown==5.2.2",
 ]
 name = "know-your-camera"
